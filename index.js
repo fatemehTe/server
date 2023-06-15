@@ -36,7 +36,7 @@ app.use('/topic', topicRoutes);
 app.use('/topicUsed', topicUsedRoutes);
 app.use('/studentTopicStatus', studentTopicStatusRoutes);
 app.use('/question', questionRoutes);
-app.use('/karbars', karbarRoutes);
+app.use('/karbar', karbarRoutes);
 app.use('/azmoon', azmoonRoutes);
 app.use('/userStudent', userStudentRoutes);
 app.use('/userMoshaver', userMoshaverRoutes);
@@ -49,11 +49,12 @@ app.use('/thisWeekTasks', thisWeekTasks);
 // const CONNECTION_URL = 'mongodb+srv://Fateme:misisisimi1@nodeexpressproject.vb2rj.mongodb.net/?retryWrites=true&w=majority'
 // const CONNECTION_URL = 'mongodb+srv://Fateme:misisisimi1@cluster0.kisjfkv.mongodb.net/?retryWrites=true&w=majority'
 
-const CONNECTION_URL = 'mongodb://localhost/radepa'
+const CONNECTION_URL = 'mongodb://localhost'
 
 const PORT = process.env.PORT || 5000;
-// app.use('/', express.static(path.resolve(__dirname,'assets')))
-app.use('/', connect.static(__dirname + '/assets'));
+app.get('/', function(req, res){
+    res.send("Hello from the 'test' URL");
+});
 mongoose.set('strictQuery',false)
 mongoose.connect(CONNECTION_URL,{ useNewUrlParser:true,useUnifiedTopology:true })
 .then(()=> app.listen(PORT, ()=> console.log(`Server running on port ${PORT}`)))
