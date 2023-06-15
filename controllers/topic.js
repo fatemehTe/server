@@ -5,9 +5,11 @@ import topic from "../models/topic.js";
 
 export const createTopic = async (req, res) => {
     const topicGet = req.body;
-    const newTopic = new topic({ ...topicGet })
     try {
-        await newTopic.save();
+        for (let i=0;i<topicGet.length;i++) {
+            const newTopic = new topic({ ...topicGet[i] })
+            await newTopic.save();
+        }
         res.status(201).json(newTopic)
     } catch (error) {
         res.status(409).json({ message: error })
