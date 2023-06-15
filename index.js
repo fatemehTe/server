@@ -35,7 +35,7 @@ app.use('/topic', topicRoutes);
 app.use('/topicUsed', topicUsedRoutes);
 app.use('/studentTopicStatus', studentTopicStatusRoutes);
 app.use('/question', questionRoutes);
-app.use('/karbar', karbarRoutes);
+app.use('/karbars', karbarRoutes);
 app.use('/azmoon', azmoonRoutes);
 app.use('/userStudent', userStudentRoutes);
 app.use('/userMoshaver', userMoshaverRoutes);
