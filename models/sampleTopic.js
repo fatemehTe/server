@@ -6,6 +6,8 @@ const sampleTopicSchema = mongoose.Schema({
     LessonId : {type: Number, required: true},
     ParentTopicId : {type: Number, required: false},
     Title : {type: String, required: true},
+    str: {type: String, required: true},
+    topicRoutes: {type: Array, required: true}
 })
 
 const sampleTopic = mongoose.model('sampleTopic', sampleTopicSchema)
