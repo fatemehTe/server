@@ -2,6 +2,22 @@ import mongoose from "mongoose"
 import sampleTopic from "../models/sampleTopic.js";
 
 
+export const getTopicById = async (req, res) => {
+    const { searchQuery } = req.query
+    return res.status(200).json(searchQuery)
+    // return res.status(200).json({msg:searchQuery})
+    let returnArray = []
+    try {
+        for(let i=0;i<searchQuery.length;i++){
+            const Id = searchQuery[i]
+            const obj = await sampleTopic.find({ Id })
+            obj?returnArray.push(obj):''
+        }
+        res.status(200).json(returnArray)
+    } catch (error) {
+        res.status(404).json({ message: error })
+    }
+}
 
 export const createTopic = async (req, res) => {
     const topicGet = req.body;
