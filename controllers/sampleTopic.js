@@ -3,14 +3,11 @@ import sampleTopic from "../models/sampleTopic.js";
 
 
 export const getTopicById = async (req, res) => {
-    const { searchQuery } = req.query
-    // return res.status(200).json(searchQuery)
-    // return res.status(200).json({msg:searchQuery})
-    let arr = searchQuery
+    const { array } = req.params
     let returnArray = []
     try {
-        for(let i=0;i<arr.length;i++){
-            const Id = parseInt(arr[i])
+        for(let i=0;i<array.length;i++){
+            const Id = parseInt(array[i])
             const obj = await sampleTopic.find({ Id })
             obj?returnArray.push(obj):''
         }
