@@ -3,7 +3,8 @@ import sampleTopic from "../models/sampleTopic.js";
 
 
 export const getTopicById = async (req, res) => {
-    const { array } = req.params
+    const { arr } = req.query
+    let array = arr.split(',')
     let returnArray = []
     try {
         for(let i=0;i<array.length;i++){

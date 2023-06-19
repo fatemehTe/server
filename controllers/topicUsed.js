@@ -46,7 +46,8 @@ export const updateTopicsNextStatus = async (req, res) => {
     try {
         for (let i=0;i<mainObject.length;i++) {
             const updateResult = await topicUsed.updateOne({studentId:mainObject[i].studentId, TopicId:mainObject[i].TopicId},{$set:{
-                studyStatusNext:mainObject[i].studyStatusNext
+                studyStatusNext:mainObject[i].studyStatusNext,
+                topicRoutes:mainObject[i].topicRoutes
             }})
             // res.status(200).json({ updateResult:updateResult })
         }
