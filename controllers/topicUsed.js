@@ -27,9 +27,7 @@ export const pushIntoTopics = async (req, res) => {
             // res.status(200).json({ newElement:newElement })
           }else{
             let topicInfo = existingElement.topicInfo
-            mainObject[i].topicInfo.map((x)=>{
-                topicInfo.push(x)
-            })
+            mainObject[i].topicInfo!==null?topicInfo.push(mainObject[i].topicInfo):''
             const updateResult = await topicUsed.updateOne({studentId:mainObject[i].studentId, TopicId:mainObject[i].TopicId},{$set:{
               topicInfo:topicInfo
           }})
