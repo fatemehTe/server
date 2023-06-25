@@ -6,7 +6,7 @@ const sampleTopicSchema = mongoose.Schema({
     LessonId : {type: Number, required: true},
     ParentTopicId : {type: Number, required: false},
     Title : {type: String, required: true},
-    str: {type: String, required: true},
+    str: {type: String, required: false},
     topicRoutes: {type: Array, required: true}
 })
 

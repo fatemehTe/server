@@ -20,6 +20,7 @@ export const getTopicById = async (req, res) => {
 
 export const createTopic = async (req, res) => {
     const topicGet = req.body;
+    // return res.status(200).json({res:'topicGet'})
     try {
         for (let i=0;i<topicGet.length;i++) {
             const newTopic = new sampleTopic({ ...topicGet[i] })
@@ -36,7 +37,7 @@ export const getTopic = async (req, res) => {
         const topicGet = await sampleTopic.find()
         res.status(200).json(topicGet)
     } catch (error) {
-        res.status(404).json({ message: error })
+        res.status(404).json({ message: 'wrong' })
     }
 }
 export const deleteTopic = async (req, res) => {
