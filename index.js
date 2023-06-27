@@ -50,10 +50,10 @@ app.use('/user', userRoutes);
 app.use('/thisWeekTasks', thisWeekTasks);
 
 
-const CONNECTION_URL = 'mongodb+srv://Fateme:misisisimi1@nodeexpressproject.vb2rj.mongodb.net/?retryWrites=true&w=majority'
+// const CONNECTION_URL = 'mongodb+srv://Fateme:misisisimi1@nodeexpressproject.vb2rj.mongodb.net/?retryWrites=true&w=majority'
 // const CONNECTION_URL = 'mongodb+srv://Fateme:misisisimi1@cluster0.kisjfkv.mongodb.net/?retryWrites=true&w=majority'
 
-// const CONNECTION_URL = 'mongodb://localhost'
+const CONNECTION_URL = 'mongodb://localhost'
 
 const PORT = process.env.PORT || 5000;
 app.get('/', function(req, res){
