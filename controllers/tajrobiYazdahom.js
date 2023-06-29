@@ -61,7 +61,6 @@ export const getBySearchCode = async (req, res) => {
         // const Title = new RegExp(searchQuery.title, "i")
         const studentId = searchQuery
         const topics = await tajrobiYazdahom.find({ studentId })
-        res.json({ data: topics })
         res.status(200).json(topics)
     } catch (error) {
         res.status(404).json({ message: error })
