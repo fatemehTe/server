@@ -71,7 +71,7 @@ export const getUserStudentByIds = async (req, res) => {
 export const deleteUsers = async (req, res) => {
     // res.send('GET WORKS!')
     try {
-        const Users = await UserStudent.remove()
+        const Users = await UserStudent.deleteMany({})
         console.log(Users)
         res.status(200).json(Users)
     } catch (error) {

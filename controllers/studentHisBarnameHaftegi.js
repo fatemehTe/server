@@ -35,7 +35,7 @@ export const getBarnameByStudentId = async (req, res) => {
 
 export const deleteAllBarname = async (req, res) => {
     
-    await StudentHisBarnameHaftegi.remove()
+    await StudentHisBarnameHaftegi.deleteMany({})
     
 }
 

@@ -36,7 +36,7 @@ export const getCitiesByProvinceId = async (req, res) => {
 
 export const deleteAllCity = async (req, res) => {
     
-    await city.remove()
+    await city.deleteMany({})
     res.json('all cities deleted successfully')
 }
 

@@ -57,3 +57,9 @@ export const getUsersById = async (req, res) => {
         res.status(404).json({ message: error })
     }
 }
+
+export const deleteAll = async (req, res) => {
+    
+    await Karbar.deleteMany({})
+    
+}

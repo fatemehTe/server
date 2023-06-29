@@ -79,7 +79,7 @@ export const getUsers = async (req, res) => {
 export const deleteUsers = async (req, res) => {
     // res.send('GET WORKS!')
     try {
-        const Users = await UserMoshaver.remove()
+        const Users = await UserMoshaver.deleteMany({})
         console.log(Users)
         res.status(200).json(Users)
     } catch (error) {

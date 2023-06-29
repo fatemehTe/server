@@ -25,7 +25,7 @@ export const getAzmoon = async (req, res) => {
 
 export const deleteAllAzmoon = async (req, res) => {
     
-    await Azmoon.remove()
+    await Azmoon.deleteMany({})
     
 }
 

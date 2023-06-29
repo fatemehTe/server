@@ -23,7 +23,7 @@ export const getQuestion = async (req, res) => {
 }
 
 export const deleteAllQuestion = async (req, res) => {
-    await question.remove()
+    await question.deleteMany({})
 }
 
 export const deleteById = async (req, res) => {

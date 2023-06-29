@@ -23,6 +23,6 @@ export const getProvinces = async (req, res) => {
     }
 }
 export const deleteAll = async (req, res) => {
-    await province.remove()
+    await province.deleteMany({})
     res.json('all provinces deleted successfully')
 }

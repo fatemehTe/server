@@ -24,7 +24,7 @@ export const getEducationTree = async (req, res) => {
 
 export const deleteAllEducationTree = async (req, res) => {
     
-    await educationTree.remove()
+    await educationTree.deleteMany({})
     res.json('all cities deleted successfully')
 }
 

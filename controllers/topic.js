@@ -27,7 +27,7 @@ export const getTopic = async (req, res) => {
 
 export const deleteAllTopic = async (req, res) => {
     
-    await topic.remove()
+    await topic.deleteMany({})
     
 }
 
