@@ -7,10 +7,15 @@ export const createTopic = async (req, res) => {
     const topicGet = req.body;
     try {
         for (let i=0;i<topicGet.length;i++) {
-            const newTopic = new topicNew({ ...topicGet[i] })
-            await newTopic.save();
+            let Id = topicGet[i].Id
+            const exixt = await topicNew.find({Id})
+            if(exixt.length==0){
+                const newTopic = new topicNew({ ...topicGet[i] })
+                await newTopic.save();
+            }else{
+                res.status(201).json({message:'existed'})
+            }
         }
-        res.status(201).json(newTopic)
     } catch (error) {
         res.status(409).json({ message: error })
     }
