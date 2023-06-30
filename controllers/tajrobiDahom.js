@@ -95,6 +95,8 @@ export const getSudystatusRouted = async (req, res) => {
         const studentId = searchQuery
         const topics = await tajrobiDahom.find({ studentId })//studentId , topicsDetails
         const privateArr = await sampleTopicPrivate.find({code})//code , sampleTopicP
+
+        
         //_______________________________________________________
         let bigArrayR = []
         let bigArrayS = []
@@ -176,59 +178,59 @@ export const getSudystatusRouted = async (req, res) => {
             }
         }
 
-        
+
         //____________________________WORK PLACE___________________
         
 
-    for(let i =0;i<mixed.length;i++){
-        let statusArray = [0,0,0,0,0,]
-        if(mixed[i].topicRoutes.length>1){
-            if(workPlaceOne[mixed[i].topicRoutes[1]] == null){
-                workPlaceOne[mixed[i].topicRoutes[1]] = statusArray
+        for(let i =0;i<mixed.length;i++){
+            let statusArray = [0,0,0,0,0,]
+            if(mixed[i].topicRoutes.length>1){
+                if(workPlaceOne[mixed[i].topicRoutes[1]] == null){
+                    workPlaceOne[mixed[i].topicRoutes[1]] = statusArray
+                }
+                workPlaceOne[mixed[i].topicRoutes[1]][mixed[i].workStatus] += 1
+                workPlaceOne[mixed[i].topicRoutes[1]][4] += 1
             }
-            workPlaceOne[mixed[i].topicRoutes[1]][mixed[i].workStatus] += 1
-            workPlaceOne[mixed[i].topicRoutes[1]][4] += 1
         }
-    }
-  
-  
-    for(let i =0;i<mixed.length;i++){
-        let statusArray = [0,0,0,0,0,]
-        if(mixed[i].topicRoutes.length>1){
-            if(workPlaceTwo[mixed[i].topicRoutes[1]] == null){
-                workPlaceTwo[mixed[i].topicRoutes[1]] = statusArray
+      
+      
+        for(let i =0;i<mixed.length;i++){
+            let statusArray = [0,0,0,0,0,]
+            if(mixed[i].topicRoutes.length>1){
+                if(workPlaceTwo[mixed[i].topicRoutes[1]] == null){
+                    workPlaceTwo[mixed[i].topicRoutes[1]] = statusArray
+                }
+                workPlaceTwo[mixed[i].topicRoutes[1]][mixed[i].workStatus] += 1
+                workPlaceTwo[mixed[i].topicRoutes[1]][4] += 1
             }
-            workPlaceTwo[mixed[i].topicRoutes[1]][mixed[i].workStatus] += 1
-            workPlaceTwo[mixed[i].topicRoutes[1]][4] += 1
         }
-    }
-  
-  
-    for(let i =0;i<workPlaceOne.length;i++){
-        if(workPlaceOne[i]!=null){
-            for(let j =0;j<workPlaceOne[i].length;j++){
-                if(workPlaceOne[i][4]==0)workPlaceOne[i][4]=1
-                workPlaceOne[i][j] = workPlaceOne[i][j]*100/workPlaceOne[i][4]
+      
+      
+        for(let i =0;i<workPlaceOne.length;i++){
+            if(workPlaceOne[i]!=null){
+                for(let j =0;j<workPlaceOne[i].length;j++){
+                    if(workPlaceOne[i][4]==0)workPlaceOne[i][4]=1
+                    workPlaceOne[i][j] = workPlaceOne[i][j]*100/workPlaceOne[i][4]
+                }
+            }else{
+                workPlaceOne[i]=[0,0,0,0,0]
             }
-        }else{
-            workPlaceOne[i]=[0,0,0,0,0]
         }
-    }
+        
+        for(let i =0;i<workPlaceTwo.length;i++){
+            if(workPlaceTwo[i]!=null){
+                for(let j =0;j<workPlaceTwo[i].length;j++){
+                    if(workPlaceTwo[i][4]==0)workPlaceTwo[i][4]=1
+                    workPlaceTwo[i][j] = workPlaceTwo[i][j]*100/workPlaceTwo[i][4]
+                }
+            }else{
+                workPlaceTwo[i]=[0,0,0,0,0]
+            }
+        }
+      
+            //_________________________________________________________
     
-    for(let i =0;i<workPlaceTwo.length;i++){
-        if(workPlaceTwo[i]!=null){
-            for(let j =0;j<workPlaceTwo[i].length;j++){
-                if(workPlaceTwo[i][4]==0)workPlaceTwo[i][4]=1
-                workPlaceTwo[i][j] = workPlaceTwo[i][j]*100/workPlaceTwo[i][4]
-            }
-        }else{
-            workPlaceTwo[i]=[0,0,0,0,0]
-        }
-    }
-  
-        //_________________________________________________________
-
-        res.status(200).json({one:statusPlaceOne, two:statusPlaceTwo, workOne:workPlaceOne, workTwo:workPlaceTwo})
+            res.status(200).json({one:statusPlaceOne, two:statusPlaceTwo, workOne:workPlaceOne, workTwo:workPlaceTwo})
     } catch (error) {
         res.status(404).json({ message: error })
     }
