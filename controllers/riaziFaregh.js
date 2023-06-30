@@ -96,6 +96,8 @@ export const getSudystatusRouted = async (req, res) => {
         let mixed = []
         let statusPlaceOne = []
         let statusPlaceTwo = []
+        let workPlaceOne = []
+        let workPlaceTwo = []
     
         let privateArray = privateArr[0].sampleTopicP
         let topicsArray = topics[0].topicsDetails
