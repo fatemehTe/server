@@ -1,5 +1,5 @@
 import express from 'express'
-import { create, get, getBySearch, deleteAll, getBySearchCode, deleteById, updateById } from '../controllers/ensaniDahom.js';
+import { create, get, getBySearch, deleteAll, getBySearchCode, deleteById, updateById,getSudystatusRouted } from '../controllers/ensaniDahom.js';
 
 
 import auth from '../middleware/auth.js';
@@ -13,6 +13,7 @@ router.get('/search', getBySearch)
 router.get('/searchById', getBySearchCode)
 router.delete('/', deleteAll)
 router.delete('/:id', deleteById)
+router.get('/getSudystatusRouted',getSudystatusRouted)
 
 
 export default router;
