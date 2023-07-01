@@ -147,13 +147,13 @@ export const getSudystatusRouted = async (req, res) => {
         for(let i =0;i<mixed.length;i++){
             let statusArray = [0,0,0,0,0,0,0,0,0,0]
             if(mixed[i].topicRoutes.length>1){
-                if(statusPlaceTwo[mixed[i].topicRoutes[1]] == null){
-                    statusPlaceTwo[mixed[i].topicRoutes[1]] = statusArray
-                    statusPlaceTwo[mixed[i].topicRoutes[1]][9]=mixed[i].topicRoutes[1]
+                if(statusPlaceTwo[mixed[i].topicRoutes[2]] == null){
+                    statusPlaceTwo[mixed[i].topicRoutes[2]] = statusArray
+                    statusPlaceTwo[mixed[i].topicRoutes[2]][9]=mixed[i].topicRoutes[1]
                 }
                 mixed[i].studyStatusNext == 10? mixed[i].studyStatusNext=7:''
-                statusPlaceTwo[mixed[i].topicRoutes[1]][mixed[i].studyStatusNext] += 1
-                statusPlaceTwo[mixed[i].topicRoutes[1]][8] += 1
+                statusPlaceTwo[mixed[i].topicRoutes[2]][mixed[i].studyStatusNext] += 1
+                statusPlaceTwo[mixed[i].topicRoutes[2]][8] += 1
             }
         }
 
@@ -246,11 +246,11 @@ export const getSudystatusRouted = async (req, res) => {
     for(let i =0;i<mixed.length;i++){
         let statusArray = [0,0,0,0,0]
         if(mixed[i].topicRoutes.length>1){
-            if(workPlaceTwo[mixed[i].topicRoutes[1]] == null){
-                workPlaceTwo[mixed[i].topicRoutes[1]] = statusArray
+            if(workPlaceTwo[mixed[i].topicRoutes[2]] == null){
+                workPlaceTwo[mixed[i].topicRoutes[2]] = statusArray
             }
-            workPlaceTwo[mixed[i].topicRoutes[1]][mixed[i].workStatus] += 1
-            workPlaceTwo[mixed[i].topicRoutes[1]][4] += 1
+            workPlaceTwo[mixed[i].topicRoutes[2]][mixed[i].workStatus] += 1
+            workPlaceTwo[mixed[i].topicRoutes[2]][4] += 1
         }
     }
   
