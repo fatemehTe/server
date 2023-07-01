@@ -220,13 +220,13 @@ export const getSudystatusRouted = async (req, res) => {
             }
 
             for(let i =0;i<statusPlaceOne.length;i++){
-                for(let j =1;j<statusPlaceOne[i].length;j++){
+                for(let j =0;j<statusPlaceOne[i].length;j++){
                     statusPlaceOne[i][j] = parseInt(statusPlaceOne[i][j].toFixed(1))
                 }
             }
 
             for(let i =0;i<statusPlaceTwo.length;i++){
-                for(let j =1;j<statusPlaceTwo[i].length;j++){
+                for(let j =0;j<statusPlaceTwo[i].length;j++){
                     statusPlaceTwo[i][j] = parseInt(statusPlaceTwo[i][j].toFixed(1))
                 }
             }
@@ -303,18 +303,30 @@ export const getSudystatusRouted = async (req, res) => {
         }
     }
 
+  
     for(let i =0;i<workPlaceTwo.length;i++){
         for(let j =1;j<workPlaceTwo[i].length;j++){
-            workPlaceTwo[i][j] = parseInt(workPlaceTwo[i][j].toFixed(1))
+            workPlaceTwo[i][j]+=workPlaceTwo[i][j-1]
         }
     }
 
     for(let i =0;i<workPlaceOne.length;i++){
         for(let j =1;j<workPlaceOne[i].length;j++){
+            workPlaceOne[i][j]+=workPlaceOne[i][j-1]
+        }
+    }
+
+    for(let i =0;i<workPlaceTwo.length;i++){
+        for(let j =0;j<workPlaceTwo[i].length;j++){
+            workPlaceTwo[i][j] = parseInt(workPlaceTwo[i][j].toFixed(1))
+        }
+    }
+
+    for(let i =0;i<workPlaceOne.length;i++){
+        for(let j =0;j<workPlaceOne[i].length;j++){
             workPlaceOne[i][j] = parseInt(workPlaceOne[i][j].toFixed(1))
         }
     }
-  
         //_________________________________________________________
 
         res.status(200).json({one:statusPlaceOne, two:statusPlaceTwo, oneDesc:statusPlaceOneDesc, workOne:workPlaceOne, workTwo:workPlaceTwo, workOneDesc:workPlaceOneDesc})
