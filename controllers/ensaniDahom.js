@@ -70,11 +70,13 @@ export const updateById = async (req, res) => {
     const  obj  = req.body
     let studentId = obj.studentId
     let topicsDetails = obj.topicsDetails
+    let topicsAzmoon = obj.topicsAzmoon
     try {
         const topics = await ensaniDahom.find({ studentId })
         if(topics.length>0){//exists
             await ensaniDahom.updateOne({studentId:studentId},{$set:{
-                topicsDetails:topicsDetails
+                topicsDetails:topicsDetails,
+                topicsAzmoon:topicsAzmoon
             }})
         }else{
             res.status(200).json({message:'not this user found'})    
@@ -86,11 +88,12 @@ export const updateById = async (req, res) => {
 }
 
 export const getSudystatusRouted = async (req, res) => {
-    const { searchQuery } = req.query
+    const { searchQuery, doneTopics } = req.query
     let code = '20'
     try {
         const studentId = searchQuery
-        const topics = await ensaniDahom.find({ studentId })//studentId , topicsDetails
+        // const topics = await ensaniDahom.find({ studentId })//studentId , topicsDetails
+        const topics = doneTopics
         const privateArr = await sampleTopicPrivate.find({code})//code , sampleTopicP
         //_______________________________________________________
         let bigArrayR = []

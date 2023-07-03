@@ -1,4 +1,5 @@
 import UserStudent from '../models/userStudent.js';
+import UserMoshaver from '../models/userMoshaver.js';
 
 
 export const userStudent = async (req, res) => {
@@ -72,7 +73,7 @@ export const deleteUsers = async (req, res) => {
     // res.send('GET WORKS!')
     try {
         const Users = await UserStudent.deleteMany({})
-        console.log(Users)
+        
         res.status(200).json(Users)
     } catch (error) {
         res.status(404).json({ message: error })
@@ -98,3 +99,36 @@ export const getReshteIdByStudentId = async (req, res) => {
     }
 }
 
+export const getMoshavers = async (req, res) => {
+    let {studentId} = req.query
+    let userId = studentId
+    
+    try {
+        const Users = await UserStudent.find({userId})
+            return res.status(200).json(Users[0].moshaverIds[0])      
+    } catch (error) {
+        res.status(404).json({ message: error })
+    }
+}
+export const addMoshaver = async (req, res) => {
+    let obj = req.body
+    let userId = obj.studentId
+    let moshaverId = obj.moshaverId
+    
+    try {
+        const existingUser = await UserStudent.findOne({ userId })
+        // return res.status(200).json({ existingUser })
+        const index = existingUser.moshaverIds.findIndex((id)=>id===String(moshaverId));
+        const filter = {userId:userId}
+        if (index === -1 || existingUser.moshaverIds.length==0) {
+            existingUser.moshaverIds.push(moshaverId)
+            const updatedPost = await UserStudent.findOneAndUpdate(filter, existingUser)
+            res.status(200).json({ updatedPost })
+        } else {
+             res.status(200).json({ msg:'moshaver exists in student students' })
+        }
+       
+    } catch (error) {
+        res.status(400).json({ message: error })
+    }
+}

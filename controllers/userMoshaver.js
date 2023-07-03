@@ -1,4 +1,5 @@
 import UserMoshaver from '../models/userMoshaver.js';
+import UserStudent from '../models/userStudent.js';
 
 
 export const userMoshaver = async (req, res) => {
@@ -49,18 +50,19 @@ export const userMoshaver = async (req, res) => {
 export const setStudentForMoshaver = async (req, res) => {
     const user = req.body
     let userId = user.userId
-    let stId = user.studentId
+    let studentId = user.studentId
     try {
         const existingUser = await UserMoshaver.findOne({ userId })
-        const index = existingUser.studentIds.findIndex((id)=>id===String(stId));
+        const index = existingUser.studentIds.findIndex((id)=>id===String(studentId));
         const filter = {userId:userId}
         if (index === -1) {
-            existingUser.studentIds.push(stId)
+            existingUser.studentIds.push(studentId)
             const updatedPost = await UserMoshaver.findOneAndUpdate(filter, existingUser)
-            return res.status(200).json({ updatedPost })
+            res.status(200).json({ updatedPost })
         } else {
-            return res.status(200).json({ msg:'exists' })
+             res.status(200).json({ msg:'student exists in moshaver students' })
         }
+       
     } catch (error) {
         res.status(400).json({ message: error })
     }
@@ -97,3 +99,21 @@ export const getUserMoshaverById = async (req, res) => {
         res.status(404).json({ message: error })
     }
 }
+
+export const getUserMoshaverByStId = async (req, res) => {
+    const { studentId } = req.query
+    // return  res.status(404).json({ message: studentId })
+    try {
+        const userFound = await UserMoshaver.find({ studentId })
+        if(userFound.length>0){
+            res.status(200).json(userFound)
+        }else{
+            res.status(200).json({message:'not exsists'})
+        }
+        
+    } catch (error) {
+        res.status(404).json({ message: error })
+    }
+}
+
+

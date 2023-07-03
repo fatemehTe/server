@@ -7,7 +7,8 @@ const studentAuthorityBarnameHaftegiSchema = mongoose.Schema({
     firstWeekDateDayName: {type: Number, required: true},
     //0->1sh - 1->2sh - ... - 7->sh
     barnames: {type:Array, required: true},
-    moshaverComment: {type: String, required: false}
+    moshaverComment: {type: String, required: false},
+    done:{type: Boolean, required: true}
     //Array of barnameObject
     //barnameObject:{ roozeHafte:int ,tarikh:String ,barname:Array of { row:Number, tarikh:String, roozehafte:Number, startTime:String
     // endTime:String, durationTesti:String, durationTashrihi:String, topicId:Number, lessonId:Number

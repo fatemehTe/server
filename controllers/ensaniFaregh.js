@@ -71,12 +71,14 @@ export const updateById = async (req, res) => {
     const  obj  = req.body
     let studentId = obj.studentId
     let topicsDetails = obj.topicsDetails
+    let topicsAzmoon = obj.topicsAzmoon
     try {
         const topics = await ensaniFaregh.find({ studentId })
         if(topics.length>0){//exists
 
             await ensaniFaregh.updateOne({studentId:studentId},{$set:{
-                topicsDetails:topicsDetails
+                topicsDetails:topicsDetails,
+                topicsAzmoon:topicsAzmoon
             }})
 
         }else{
@@ -89,15 +91,29 @@ export const updateById = async (req, res) => {
 }
 
 export const getSudystatusRouted = async (req, res) => {
-    const { searchQuery } = req.query
+    const { searchQuery, moshaverId ,doneTopics } = req.query
     let code = '23'
     try {
         const studentId = searchQuery
+        const moshaverId = moshaverId
+        const weekStartDate = doneTopics
+        const weekTasks = await ensaniFaregh.find({ $and: [{ studentId }, { weekStartDate }, {moshaverId}] })
+        //try findOne also
         const topics = await ensaniFaregh.find({ studentId })//studentId , topicsDetails
         const privateArr = await sampleTopicPrivate.find({code})//code , sampleTopicP
         //_______________________________________________________
+
+        let allDays = weekTasks.barnames
+        let allPickedTopics = []//id, workStatus, darsadAzmoon
+
+        allDays.map((x,i)=>{
+          allPickedTopics.push(x.tasks.pickedTopics)
+        })
+        
+        
         let bigArrayR = []
         let bigArrayS = []
+        let bigArrayW = []
         let mixed = []
         let statusPlaceOne = []
         let statusPlaceTwo = []
@@ -109,21 +125,27 @@ export const getSudystatusRouted = async (req, res) => {
         let arr = ['مطالعه اول','مرور اول','مرور دوم','مرور سوم','تثبیت','جمعبندی','اتمام','حذف شده']
         let workarr = ['نخوانده','خوانده','نیمه خوانده']
     
-        let privateArray = privateArr[0].sampleTopicP
-        let topicsArray = topics[0].topicsDetails
+        let privateArray = privateArr[0].sampleTopicP//TopicID, topicRoutes
+        // let AzmoonArray = topics[0].topicsAzmoon//topics two digits decimal each topic darsad NO NEED HERE
+        let topicsArray = topics[0].topicsDetails//topics.0 .1 .2 .3 .4 .5 .6 .7
+        allPickedTopics = allPickedTopics.flat()//workSttaus, id
+
+        for(let i =0;i<topicsArray.length;i++){
+            bigArrayS[Math.floor(topicsArray[i])]=parseInt((topicsArray[i]%1).toFixed(1)*10)
+        }
 
         for(let i =0;i<privateArray.length;i++){
             bigArrayR[privateArray[i].Id]=privateArray[i]
         }
 
-        for(let i =0;i<topicsArray.length;i++){
-            bigArrayS[topicsArray[i].topicId]=topicsArray[i]
+        for(let i =0;i<allPickedTopics.length;i++){
+            bigArrayW[allPickedTopics[i].id]=allPickedTopics[i].workStatus
         }
-
+        
 
         for(let i =0;i<bigArrayR.length;i++){
             if(bigArrayR[i] != null && bigArrayS[i] != null){
-                if(bigArrayR[i].Id == bigArrayS[i].topicId){
+                if(bigArrayR[i].Id == bigArrayS[i]){
                   let obj = {
                     ...bigArrayS[i],
                     topicRoutes:bigArrayR[i].topicRoutes
@@ -234,28 +256,50 @@ export const getSudystatusRouted = async (req, res) => {
 
         //____________________________WORK PLACE___________________
         
+    // for(let i =0;i<mixed.length;i++){
+    //     let statusArray = [0,0,0,0,0]
+    //     if(mixed[i].topicRoutes.length>1){
+    //         if(workPlaceOne[mixed[i].topicRoutes[1]] == null){
+    //             workPlaceOne[mixed[i].topicRoutes[1]] = statusArray
+    //         }
+    //         workPlaceOne[mixed[i].topicRoutes[1]][mixed[i].workStatus] += 1
+    //         workPlaceOne[mixed[i].topicRoutes[1]][4] += 1
+    //     }
+    // }
+
     for(let i =0;i<mixed.length;i++){
         let statusArray = [0,0,0,0,0]
         if(mixed[i].topicRoutes.length>1){
             if(workPlaceOne[mixed[i].topicRoutes[1]] == null){
                 workPlaceOne[mixed[i].topicRoutes[1]] = statusArray
             }
-            workPlaceOne[mixed[i].topicRoutes[1]][mixed[i].workStatus] += 1
+            workPlaceOne[mixed[i].topicRoutes[1]][bigArrayW[i].workStatus] += 1
             workPlaceOne[mixed[i].topicRoutes[1]][4] += 1
         }
     }
 
+    // for(let i =0;i<mixed.length;i++){
+    //     let statusArray = [0,0,0,0,0]
+    //     if(mixed[i].topicRoutes.length>1){
+    //         if(workPlaceTwo[mixed[i].topicRoutes[2]] == null){
+    //             workPlaceTwo[mixed[i].topicRoutes[2]] = statusArray
+    //         }
+    //         workPlaceTwo[mixed[i].topicRoutes[2]][mixed[i].workStatus] += 1
+    //         workPlaceTwo[mixed[i].topicRoutes[2]][4] += 1
+    //     }
+    // }
+  
+    
     for(let i =0;i<mixed.length;i++){
         let statusArray = [0,0,0,0,0]
         if(mixed[i].topicRoutes.length>1){
             if(workPlaceTwo[mixed[i].topicRoutes[2]] == null){
                 workPlaceTwo[mixed[i].topicRoutes[2]] = statusArray
             }
-            workPlaceTwo[mixed[i].topicRoutes[2]][mixed[i].workStatus] += 1
+            workPlaceTwo[mixed[i].topicRoutes[2]][bigArrayW[i].workStatus] += 1
             workPlaceTwo[mixed[i].topicRoutes[2]][4] += 1
         }
     }
-  
 
     for(let i =0;i<workPlaceOne.length;i++){
         workPlaceOneDesc.push(workPlaceOne[i])

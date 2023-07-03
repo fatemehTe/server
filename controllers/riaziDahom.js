@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 import riaziDahom from "../models/riaziDahom.js";
 import sampleTopicPrivate from "../models/sampleTopicPrivate.js";
+import  studentAuthorityBarnameHaftegi from '../models/studentAuthorityBarnameHaftegi.js';
 
 
 export const create = async (req, res) => {
@@ -70,13 +71,15 @@ export const updateById = async (req, res) => {
     const obj  = req.body
     let studentId = obj.studentId
     let topicsDetails = obj.topicsDetails
+    let topicsAzmoon = obj.topicsAzmoon
     // return res.status(200).json({message:studentId})
     try {
         const topics = await riaziDahom.find({ studentId })
         if(topics.length>0){//exists
 
             await riaziDahom.updateOne({studentId:studentId},{$set:{
-                topicsDetails:topicsDetails
+                topicsDetails:topicsDetails,
+                topicsAzmoon:topicsAzmoon
             }})
 
         }else{
@@ -89,11 +92,14 @@ export const updateById = async (req, res) => {
 }
 
 export const getSudystatusRouted = async (req, res) => {
-    const { searchQuery } = req.query
+    const { searchQuery, doneTopics } = req.query
+
     let code = '00'
     try {
         const studentId = searchQuery
         const topics = await riaziDahom.find({ studentId })//studentId , topicsDetails
+        // const topics = doneTopics
+        // return res.status(200).json(topics)
         const privateArr = await sampleTopicPrivate.find({code})//code , sampleTopicP
         //_______________________________________________________
         let bigArrayR = []
@@ -117,22 +123,23 @@ export const getSudystatusRouted = async (req, res) => {
         }
 
         for(let i =0;i<topicsArray.length;i++){
-            bigArrayS[topicsArray[i].topicId]=topicsArray[i]
+            let index = Math.floor(topicsArray[i])
+            let value = parseInt((topicsArray[i]%1).toFixed(1)*10)
+            bigArrayS[index] = value
         }
 
-
+        
         for(let i =0;i<bigArrayR.length;i++){
             if(bigArrayR[i] != null && bigArrayS[i] != null){
-                if(bigArrayR[i].Id == bigArrayS[i].topicId){
                   let obj = {
-                    ...bigArrayS[i],
+                    id:bigArrayR[i].Id,
+                    studyStatusNext:bigArrayS[i],
                     topicRoutes:bigArrayR[i].topicRoutes
                   }
                   mixed.push(obj)
-                }
               }
         }
-
+        
         for(let i =0;i<mixed.length;i++){
             let statusArray = [0,0,0,0,0,0,0,0,0,0]
             if(mixed[i].topicRoutes.length>1){
@@ -141,7 +148,7 @@ export const getSudystatusRouted = async (req, res) => {
                 statusPlaceOne[mixed[i].topicRoutes[1]][9]=mixed[i].topicRoutes[1]
                 }
                 mixed[i].studyStatusNext == 10? mixed[i].studyStatusNext=7:''
-                statusPlaceOne[mixed[i].topicRoutes[1]][mixed[i].studyStatusNext] += 1
+                mixed[i].studyStatusNext>0?statusPlaceOne[mixed[i].topicRoutes[1]][mixed[i].studyStatusNext] += 1:''
                 statusPlaceOne[mixed[i].topicRoutes[1]][8] += 1
             }
         }
@@ -154,7 +161,7 @@ export const getSudystatusRouted = async (req, res) => {
                     statusPlaceTwo[mixed[i].topicRoutes[2]][9]=mixed[i].topicRoutes[1]
                 }
                 mixed[i].studyStatusNext == 10? mixed[i].studyStatusNext=7:''
-                statusPlaceTwo[mixed[i].topicRoutes[2]][mixed[i].studyStatusNext] += 1
+                mixed[i].studyStatusNext>0?statusPlaceTwo[mixed[i].topicRoutes[2]][mixed[i].studyStatusNext] += 1:''
                 statusPlaceTwo[mixed[i].topicRoutes[2]][8] += 1
             }
         }

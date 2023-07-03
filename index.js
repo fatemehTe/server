@@ -23,6 +23,7 @@ import studentAuthorityBarnameHaftegiRoutes from './routes/studentAuthorityBarna
 import userRoutes from './routes/users.js';
 import thisWeekTasks from './routes/thisWeekTasks.js';
 
+import studentsRowSample from './routes/studentsRowSample.js';
 import sampleTopicPrivate from './routes/sampleTopicPrivate.js';
 
 import riaziDahom from './routes/riaziDahom.js';
@@ -71,6 +72,7 @@ app.use('/studentAuthorityBarnameHaftegi', studentAuthorityBarnameHaftegiRoutes)
 app.use('/user', userRoutes);
 app.use('/thisWeekTasks', thisWeekTasks);
 
+app.use('/studentsRowSample', studentsRowSample);
 app.use('/sampleTopicPrivate', sampleTopicPrivate);
 
 //riazi
