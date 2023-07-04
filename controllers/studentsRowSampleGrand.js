@@ -39,6 +39,7 @@ export const createTopic = async (req, res) => {
 
 export const getTopic = async (req, res) => {
     // res.send('GET WORKS!')
+    //  return res.status(201).json({ message: 'getTopicgetTopic' })
     try {
         const topicGet = await studentsRowSampleGrand.find()
         res.status(200).json(topicGet)

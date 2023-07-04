@@ -78,7 +78,7 @@ app.use('/thisWeekTasks', thisWeekTasks);
 
 
 
-app.use('/studentsRowSampleGrand', studentsRowSampleGrandd);
+app.use('/studentsGrandRowSample', studentsRowSampleGrandd);
 app.use('/sampleTopicGrand', sampleTopicGrand);
 app.use('/topicGrandChild', topicGrandChild);
 

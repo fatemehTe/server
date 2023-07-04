@@ -21,7 +21,7 @@ export const getTopicById = async (req, res) => {
 
 export const createTopic = async (req, res) => {
     const topicGet = req.body;
-    return res.status(200).json(topicGet)
+    // return res.status(200).json(topicGet)
     let code = topicGet.code
     try {      
         const user = await sampleTopicGrand.find({code})
