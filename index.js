@@ -23,6 +23,10 @@ import studentAuthorityBarnameHaftegiRoutes from './routes/studentAuthorityBarna
 import userRoutes from './routes/users.js';
 import thisWeekTasks from './routes/thisWeekTasks.js';
 
+import studentsRowSampleGrandd from './routes/studentsRowSampleGrand.js'
+import sampleTopicGrand from './routes/sampleTopicGrand.js';
+import topicGrandChild from './routes/topicGrandChild.js';
+
 import studentsRowSample from './routes/studentsRowSample.js';
 import sampleTopicPrivate from './routes/sampleTopicPrivate.js';
 
@@ -71,6 +75,12 @@ app.use('/studentHisBarnameHaftegi', studentHisBarnameHaftegiRoutes);
 app.use('/studentAuthorityBarnameHaftegi', studentAuthorityBarnameHaftegiRoutes);
 app.use('/user', userRoutes);
 app.use('/thisWeekTasks', thisWeekTasks);
+
+
+
+app.use('/studentsRowSampleGrand', studentsRowSampleGrandd);
+app.use('/sampleTopicGrand', sampleTopicGrand);
+app.use('/topicGrandChild', topicGrandChild);
 
 app.use('/studentsRowSample', studentsRowSample);
 app.use('/sampleTopicPrivate', sampleTopicPrivate);
