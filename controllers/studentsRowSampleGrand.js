@@ -54,5 +54,4 @@ export const deleteTopic = async (req, res) => {
     } catch (error) {
         res.status(404).json({ message: 'not deleted' })
     }
-    
 }

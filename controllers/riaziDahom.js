@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 import riaziDahom from "../models/riaziDahom.js";
-import sampleTopicPrivate from "../models/sampleTopicPrivate.js";
+import sampleTopicPrivate from "../models/sampleTopicGrand.js";
+// import sampleTopicPrivate from "../models/sampleTopicPrivate.js";
 import  studentAuthorityBarnameHaftegi from '../models/studentAuthorityBarnameHaftegi.js';
 
 
@@ -93,19 +94,23 @@ export const updateById = async (req, res) => {
 
 export const ReportStIdantTopicId = async (req, res) => {
     const { studentId, topicId } = req.query
-   
+//    return res.status(200).json(req.query)
     let code = '00'
     try {
         const topics = await riaziDahom.find({ studentId })//studentId , topicsDetails
         const privateArr = await sampleTopicPrivate.find({code})//code , sampleTopicP
 
-        // return res.status(200).json(topics)
+        // return res.status(200).json(privateArr)
         //_______________________________________________________
         let statusFound = ''
+        let statusFoundAzmoon = ''
+        let statusFoundWork = ''
 
 
         let bigArrayR = []
         let bigArrayS = []
+        let bigArrayA = []
+        let bigArrayW = []
         let mixed = []
         let statusPlaceOne = []
         let statusPlaceTwo = []
@@ -119,6 +124,9 @@ export const ReportStIdantTopicId = async (req, res) => {
     
         let privateArray = privateArr[0].sampleTopicP
         let topicsArray = topics[0].topicsDetails
+        let azmoonArray = topics[0].topicsAzmoon
+
+        
 
         for(let i =0;i<privateArray.length;i++){
             bigArrayR[privateArray[i].Id]=privateArray[i]
@@ -130,6 +138,12 @@ export const ReportStIdantTopicId = async (req, res) => {
             bigArrayS[index] = value
         }
 
+        for(let i =0;i<azmoonArray.length;i++){
+            let index = Math.floor(azmoonArray[i])
+            let value = parseInt((azmoonArray[i]%1).toFixed(2)*100)
+            bigArrayA[index] = value
+        }
+        // return res.status(200).json(bigArrayA)
 
         for(let i =0;i<bigArrayR.length;i++){
             if(bigArrayR[i] != null && bigArrayS[i] != null){
@@ -142,18 +156,18 @@ export const ReportStIdantTopicId = async (req, res) => {
               }
         }
 
-        if(bigArrayS[topicId]!=null){
+        if(bigArrayS[topicId]!=null && bigArrayR[topicId]!=null){
             bigArrayS[topicId]==10?bigArrayS[topicId]=7:''
-            // statusFound = arr[bigArrayS[topicId]]+'100%'+' - '
-            statusFound = bigArrayS[topicId]
+            statusFound = '100%'+arr[bigArrayS[topicId]]
         }else{
             let MyChilds = []
             let bigArrayCh = []
             let indexArray = [0,0,0,0,0,0,0,0]
                 for(let i =0;i<mixed.length;i++){
-                    if(mixed[i].topicRoutes.filter(x=>x==topicId)){
-                        MyChilds.push(mixed[i].id)
-                    }
+
+                    mixed[i].topicRoutes.map((x)=>{
+                        x == topicId?MyChilds.push(mixed[i].id):''
+                    })
                 }
                 for(let i =0;i<MyChilds.length;i++){
                     bigArrayCh[MyChilds[i]]=MyChilds[i]
@@ -163,18 +177,45 @@ export const ReportStIdantTopicId = async (req, res) => {
                         indexArray[bigArrayS[i]]+=1
                     }
                 }
-                let mo1 = (indexArray[0]*100/MyChilds.length)+'%'+arr[0]
-                let m1 = (indexArray[1]*100/MyChilds.length)+'%'+arr[1]
-                let m2 = (indexArray[2]*100/MyChilds.length)+'%'+arr[2]
-                let m3 = (indexArray[3]*100/MyChilds.length)+'%'+arr[3]
-                let t = (indexArray[4]*100/MyChilds.length)+'%'+arr[4]
-                let j = (indexArray[5]*100/MyChilds.length)+'%'+arr[5]
-                let e = (indexArray[6]*100/MyChilds.length)+'%'+arr[6]
-                let h = (indexArray[7]*100/MyChilds.length)+'%'+arr[7]
-                let str = mo1+' - '+m1+' - '+m2+' - '+m3+' - '+t+' - '+j+' - '+e+' - '+h
+                let mo1 = (indexArray[0]*100/MyChilds.length)!=0?(indexArray[0]*100/MyChilds.length).toFixed(2)+'%'+arr[0]+' - ':''
+                let m1 = (indexArray[1]*100/MyChilds.length)!=0?(indexArray[1]*100/MyChilds.length).toFixed(2)+'%'+arr[1]+' - ':''
+                let m2 = (indexArray[2]*100/MyChilds.length)!=0?(indexArray[2]*100/MyChilds.length).toFixed(2)+'%'+arr[2]+' - ':''
+                let m3 = (indexArray[3]*100/MyChilds.length)!=0?(indexArray[3]*100/MyChilds.length).toFixed(2)+'%'+arr[3]+' - ':''
+                let t = (indexArray[4]*100/MyChilds.length)!=0?(indexArray[4]*100/MyChilds.length).toFixed(2)+'%'+arr[4]+' - ':''
+                let j = (indexArray[5]*100/MyChilds.length)!=0?(indexArray[5]*100/MyChilds.length).toFixed(2)+'%'+arr[5]+' - ':''
+                let e = (indexArray[6]*100/MyChilds.length)!=0?(indexArray[6]*100/MyChilds.length).toFixed(2)+'%'+arr[6+' - ']:''
+                let h = (indexArray[7]*100/MyChilds.length)!=0?(indexArray[7]*100/MyChilds.length).toFixed(2)+'%'+arr[7]:''
+                let str = mo1+m1+m2+m3+t+j+e+h
+                str.substring(str.length-4,str.length-1 === ' - ')?str = str.substring(0,str.length-3):''
                 statusFound = str
         }
-        return res.status(200).json(statusFound)
+
+        if(bigArrayA[topicId]!=null && bigArrayR[topicId]!=null){
+            statusFoundAzmoon = (bigArrayA[topicId]).toFixed(2)+'%'
+        }else{
+            let MyChilds = []
+            let bigArrayCh = []
+            let miyangin = 0
+                for(let i =0;i<mixed.length;i++){
+                    mixed[i].topicRoutes.map((x)=>{
+                        x == topicId?MyChilds.push(mixed[i].id):''
+                    })
+                }
+                for(let i =0;i<MyChilds.length;i++){
+                    bigArrayCh[MyChilds[i]]=MyChilds[i]
+                }
+                
+                for(let i =0;i<bigArrayCh.length;i++){
+                    if(bigArrayCh[i] != null && bigArrayA[i]!=null){
+                        miyangin+=bigArrayA[i]
+                    }
+                }
+                statusFoundAzmoon = (miyangin/MyChilds.length).toFixed(2)+'%'
+            
+        }
+
+        
+        return res.status(200).json({st:statusFound,az:statusFoundAzmoon})
         
         
         for(let i =0;i<mixed.length;i++){
