@@ -1,5 +1,5 @@
 import express from 'express'
-import { create, get, getBySearch, deleteAll, getBySearchCode, deleteById, updateById, getSudystatusRouted } from '../controllers/tajrobiDavazdahom.js';
+import { create, get, getBySearch, deleteAll, getBySearchCode, deleteById, updateById, ReportStIdantTopicId,getSudystatusRouted } from '../controllers/tajrobiDavazdahom.js';
 
 
 import auth from '../middleware/auth.js';
@@ -10,6 +10,7 @@ router.post('/', create)
 router.post('/updateById', updateById)
 router.get('/', get)
 router.get('/getSudystatusRouted', getSudystatusRouted)
+router.get('/ReportStIdantTopicId',ReportStIdantTopicId)
 router.get('/search', getBySearch)
 router.get('/searchById', getBySearchCode)
 router.delete('/', deleteAll)

@@ -97,7 +97,7 @@ export const ReportStIdantTopicId = async (req, res) => {
     try {
         const topics = await tajrobiYazdahom.find({ studentId })//studentId , topicsDetails
         const privateArr = await sampleTopicPrivate.find({code})//code , sampleTopicP
-     
+        
         
         // return res.status(200).json(privateArr)
         //_______________________________________________________
@@ -201,6 +201,7 @@ export const ReportStIdantTopicId = async (req, res) => {
             }
         }
 
+        
         if(bigArrayS[topicId]!=null && bigArrayR[topicId]!=null){
             bigArrayS[topicId]==10?bigArrayS[topicId]=7:''
             statusFound = '100%'+arr[bigArrayS[topicId]]
