@@ -91,6 +91,200 @@ export const updateById = async (req, res) => {
     }
 }
 
+export const ReportStIdantTopicId = async (req, res) => {
+    const { studentId, topicId, weekStartDate, moshaverId } = req.query
+//    return res.status(200).json(req.query)
+    let code = '21'
+    try {
+        const topics = await ensaniYazdahom.find({ studentId })//studentId , topicsDetails
+        const privateArr = await sampleTopicPrivate.find({code})//code , sampleTopicP
+     
+        
+        // return res.status(200).json(privateArr)
+        //_______________________________________________________
+        let statusFound = ''
+        let statusFoundAzmoon = ''
+        let workstatusFound = ''
+        let statusFoundArray = [{c:'',d:0},{c:'',d:0},{c:'',d:0},{c:'',d:0},{c:'',d:0},{c:'',d:0},{c:'',d:0},{c:'',d:0}]
+
+
+        let bigArrayR = []
+        let bigArrayS = []
+        let bigArrayA = []
+        let bigArrayW = []
+        let mixed = []
+        let arr = ['مطالعه اول','مرور اول','مرور دوم','مرور سوم','تثبیت','جمعبندی','اتمام','حذف شده']
+        let workarr = ['نخوانده','خوانده','نیمه خوانده']
+    
+        let privateArray = privateArr[0].sampleTopicP
+        let topicsArray = topics[0].topicsDetails
+        let azmoonArray = topics[0].topicsAzmoon
+
+        
+
+        for(let i =0;i<privateArray.length;i++){
+            bigArrayR[privateArray[i].Id]=privateArray[i]
+        }
+
+        for(let i =0;i<topicsArray.length;i++){
+            let index = Math.floor(topicsArray[i])
+            let value = parseInt((topicsArray[i]%1).toFixed(1)*10)
+            bigArrayS[index] = value
+        }
+
+        for(let i =0;i<azmoonArray.length;i++){
+            let index = Math.floor(azmoonArray[i])
+            let value = parseInt((azmoonArray[i]%1).toFixed(2)*100)
+            bigArrayA[index] = value
+        }
+        // return res.status(200).json(bigArrayA)
+
+        for(let i =0;i<bigArrayR.length;i++){
+            if(bigArrayR[i] != null && bigArrayS[i] != null){
+                  let obj = {
+                    id:bigArrayR[i].Id,
+                    studyStatusNext:bigArrayS[i],
+                    topicRoutes:bigArrayR[i].topicRoutes
+                  }
+                  mixed.push(obj)
+              }
+        }
+        
+        if(weekStartDate !== 'null' && moshaverId !== 'null'){
+            
+                const weekTasks = await studentAuthorityBarnameHaftegi.find({ $and: [{ studentId }, { weekStartDate }, {moshaverId}] })
+                
+                let allDays = weekTasks[0].barnames
+            
+                let allPickedTopics = []//id, workStatus, darsadAzmoon
+        
+                allDays.map((x)=>{
+                    x.tasks.map((y)=>{
+                        allPickedTopics.push(y.pickedTopics)
+                        allPickedTopics = allPickedTopics.flat()//workSttaus, id
+                    })
+                })
+                
+            
+            
+            
+            for(let i =0;i<allPickedTopics.length;i++){
+                bigArrayW[allPickedTopics[i].id]=allPickedTopics[i].workStatus
+            }
+            // return res.status(200).json(bigArrayW)
+            if(bigArrayW[topicId]!=null && bigArrayR[topicId]!=null){
+                workstatusFound = '100%'+workarr[bigArrayW[topicId]]
+            }else{
+                let MyChilds = []
+                let bigArrayCh = []
+                let indexArray = [0,0,0]
+                    for(let i =0;i<mixed.length;i++){
+    
+                        mixed[i].topicRoutes.map((x)=>{
+                            x == topicId?MyChilds.push(mixed[i].id):''
+                        })
+                    }
+                    for(let i =0;i<MyChilds.length;i++){
+                        bigArrayCh[MyChilds[i]]=MyChilds[i]
+                    }
+                    for(let i =0;i<bigArrayCh.length;i++){
+                        if(bigArrayCh[i] != null && bigArrayW[i] != null){
+                            indexArray[bigArrayW[i]]+=1
+                        }
+                    }
+                    let n = (indexArray[0]*100/MyChilds.length)!=0?(indexArray[0]*100/MyChilds.length).toFixed(2)+'%'+workarr[0]+' - ':''
+                    let kh = (indexArray[1]*100/MyChilds.length)!=0?(indexArray[1]*100/MyChilds.length).toFixed(2)+'%'+workarr[1]+' - ':''
+                    let nikh = (indexArray[2]*100/MyChilds.length)!=0?(indexArray[2]*100/MyChilds.length).toFixed(2)+'%'+workarr[2]+' - ':''
+                    
+                    let str = n+kh+nikh
+                    str.substring(str.length-4,str.length-1 === ' - ')?str = str.substring(0,str.length-3):''
+                    workstatusFound = str
+            }
+        }
+
+        if(bigArrayS[topicId]!=null && bigArrayR[topicId]!=null){
+            bigArrayS[topicId]==10?bigArrayS[topicId]=7:''
+            statusFound = '100%'+arr[bigArrayS[topicId]]
+        }else{
+            let MyChilds = []
+            let bigArrayCh = []
+            let indexArray = [0,0,0,0,0,0,0,0]
+                for(let i =0;i<mixed.length;i++){
+
+                    mixed[i].topicRoutes.map((x)=>{
+                        x == topicId?MyChilds.push(mixed[i].id):''
+                    })
+                }
+                for(let i =0;i<MyChilds.length;i++){
+                    bigArrayCh[MyChilds[i]]=MyChilds[i]
+                }
+                for(let i =0;i<bigArrayCh.length;i++){
+                    if(bigArrayCh[i] != null && bigArrayS[i] != null){
+                        indexArray[bigArrayS[i]]+=1
+                    }
+                }
+                let mo1 = (indexArray[0]*100/MyChilds.length)!=0?(indexArray[0]*100/MyChilds.length).toFixed(2)+'%'+arr[0]+' - ':''
+                statusFoundArray[0].d=(indexArray[0]*30/MyChilds.length).toFixed(2)
+                statusFoundArray[0].c='pink'
+                let m1 = (indexArray[1]*100/MyChilds.length)!=0?(indexArray[1]*100/MyChilds.length).toFixed(2)+'%'+arr[1]+' - ':''
+                statusFoundArray[1].d=((indexArray[1]*360/MyChilds.length)+(indexArray[0]*360/MyChilds.length)).toFixed(2)
+                statusFoundArray[1].c='rgb(126, 80, 250)'
+                let m2 = (indexArray[2]*100/MyChilds.length)!=0?(indexArray[2]*100/MyChilds.length).toFixed(2)+'%'+arr[2]+' - ':''
+                statusFoundArray[2].d=((indexArray[2]*360/MyChilds.length)+(indexArray[1]*360/MyChilds.length)).toFixed(2)
+                statusFoundArray[2].c='blue'
+                let m3 = (indexArray[3]*100/MyChilds.length)!=0?(indexArray[3]*100/MyChilds.length).toFixed(2)+'%'+arr[3]+' - ':''
+                statusFoundArray[3].d=((indexArray[3]*360/MyChilds.length)+(indexArray[2]*360/MyChilds.length)).toFixed(2)
+                statusFoundArray[3].c='green'
+                let t = (indexArray[4]*100/MyChilds.length)!=0?(indexArray[4]*100/MyChilds.length).toFixed(2)+'%'+arr[4]+' - ':''
+                statusFoundArray[4].d=((indexArray[4]*360/MyChilds.length)+(indexArray[3]*360/MyChilds.length)).toFixed(2)
+                statusFoundArray[4].c='yellow'
+                let j = (indexArray[5]*100/MyChilds.length)!=0?(indexArray[5]*100/MyChilds.length).toFixed(2)+'%'+arr[5]+' - ':''
+                statusFoundArray[5].d=((indexArray[5]*360/MyChilds.length)+(indexArray[4]*360/MyChilds.length)).toFixed(2)
+                statusFoundArray[5].c='orange'
+                let e = (indexArray[6]*100/MyChilds.length)!=0?(indexArray[6]*100/MyChilds.length).toFixed(2)+'%'+arr[6+' - ']:''
+                statusFoundArray[6].d=((indexArray[6]*360/MyChilds.length)+(indexArray[5]*360/MyChilds.length)).toFixed(2)
+                statusFoundArray[6].c='black'
+                let h = (indexArray[7]*100/MyChilds.length)!=0?(indexArray[7]*100/MyChilds.length).toFixed(2)+'%'+arr[7]:''
+                statusFoundArray[7].d=((indexArray[7]*360/MyChilds.length)+(indexArray[6]*360/MyChilds.length)).toFixed(2)
+                statusFoundArray[7].c='red'
+                let str = mo1+m1+m2+m3+t+j+e+h
+                str.substring(str.length-4,str.length-1 === ' - ')?str = str.substring(0,str.length-3):''
+                statusFound = str
+                
+                
+        }
+
+        if(bigArrayA[topicId]!=null && bigArrayR[topicId]!=null){
+            statusFoundAzmoon = (bigArrayA[topicId]).toFixed(2)+'%'
+        }else{
+            let MyChilds = []
+            let bigArrayCh = []
+            let miyangin = 0
+                for(let i =0;i<mixed.length;i++){
+                    mixed[i].topicRoutes.map((x)=>{
+                        x == topicId?MyChilds.push(mixed[i].id):''
+                    })
+                }
+                for(let i =0;i<MyChilds.length;i++){
+                    bigArrayCh[MyChilds[i]]=MyChilds[i]
+                }
+                
+                for(let i =0;i<bigArrayCh.length;i++){
+                    if(bigArrayCh[i] != null && bigArrayA[i]!=null){
+                        miyangin+=bigArrayA[i]
+                    }
+                }
+                statusFoundAzmoon = (miyangin/MyChilds.length).toFixed(2)+'%'
+            
+        }
+
+        return res.status(200).json({st:statusFound,az:statusFoundAzmoon,wt:workstatusFound,stCircle:statusFoundArray})
+    } catch (error) {
+        res.status(404).json({ message: error })
+    }
+}
+
+
 export const getSudystatusRouted = async (req, res) => {
     const { searchQuery, doneTopics } = req.query
     let code = '21'
