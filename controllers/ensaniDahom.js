@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 import ensaniDahom from "../models/ensaniDahom.js";
-import sampleTopicPrivate from "../models/sampleTopicPrivate.js";
+// import sampleTopicPrivate from "../models/sampleTopicPrivate.js";
+import sampleTopicPrivate from "../models/sampleTopicGrand.js";
 
 
 export const create = async (req, res) => {

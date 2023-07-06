@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 import ensaniFaregh from "../models/ensaniFaregh.js";
-import sampleTopicPrivate from '../models/sampleTopicPrivate.js';
+// import sampleTopicPrivate from '../models/sampleTopicPrivate.js';
+import sampleTopicPrivate from "../models/sampleTopicGrand.js";
 
 
 
