@@ -1,5 +1,5 @@
 import express from 'express'
-import { createTopic,getTopic, deleteTopic, getTopicById } from '../controllers/studentsRowSampleGrand.js';
+import { createTopic,getTopic, deleteTopic, getTopicById, deleteTopicByCode } from '../controllers/studentsRowSampleGrand.js';
 
 
 import auth from '../middleware/auth.js';
@@ -10,6 +10,7 @@ router.post('/', createTopic)
 router.get('/', getTopic)
 router.get('/byId', getTopicById)
 router.delete('/', deleteTopic)
+router.delete('/:code', deleteTopicByCode)
 
 
 

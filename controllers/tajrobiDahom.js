@@ -223,6 +223,8 @@ export const ReportStIdantTopicId = async (req, res) => {
                         indexArray[bigArrayS[i]]+=1
                     }
                 }
+                
+                MyChilds.length == 0?MyChilds.length =1:''
                 let mo1 = (indexArray[0]*100/MyChilds.length)!=0?(indexArray[0]*100/MyChilds.length).toFixed(2)+'%'+arr[0]+' - ':''
                 statusFoundArray[0].d=(indexArray[0]*30/MyChilds.length).toFixed(2)
                 statusFoundArray[0].c='pink'
@@ -274,6 +276,7 @@ export const ReportStIdantTopicId = async (req, res) => {
                         miyangin+=bigArrayA[i]
                     }
                 }
+                MyChilds.length == 0?MyChilds.length =1:''
                 statusFoundAzmoon = (miyangin/MyChilds.length).toFixed(2)+'%'
             
         }

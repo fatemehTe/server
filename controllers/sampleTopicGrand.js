@@ -55,3 +55,15 @@ export const deleteTopic = async (req, res) => {
     }
     
 }
+
+export const deleteTopicByCode = async (req, res) => {
+    const {code} = req.params;
+    // res.status(404).json({ message: code })
+    try {
+        const topicGet = await sampleTopicGrand.findOneAndDelete({ code : code })
+        res.status(200).json({message:topicGet})
+    } catch (error) {
+        res.status(404).json({ message: 'not deleted' })
+    }
+    
+}
