@@ -219,6 +219,7 @@ export const ReportStIdantTopicId = async (req, res) => {
                 }
                 for(let i =0;i<bigArrayCh.length;i++){
                     if(bigArrayCh[i] != null && bigArrayS[i] != null){
+                        bigArrayS[i]==10?bigArrayS[i]=7:''
                         indexArray[bigArrayS[i]]+=1
                     }
                 }
