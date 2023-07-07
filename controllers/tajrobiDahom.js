@@ -205,6 +205,9 @@ export const ReportStIdantTopicId = async (req, res) => {
         if(bigArrayS[topicId]!=null && bigArrayR[topicId]!=null){
             bigArrayS[topicId]==10?bigArrayS[topicId]=7:''
             statusFound = '100%'+arr[bigArrayS[topicId]]
+            statusFoundArray = [{c:'',d:0},{c:'',d:0},{c:'',d:0},{c:'',d:0},{c:'',d:0},{c:'',d:0},{c:'',d:0},{c:'',d:0}]
+            statusFoundArray[bigArrayS[topicId]].d=360
+            statusFoundArray[bigArrayS[topicId]+1].d=360
         }else{
             let MyChilds = []
             let bigArrayCh = []
@@ -226,7 +229,7 @@ export const ReportStIdantTopicId = async (req, res) => {
                 
                 MyChilds.length == 0?MyChilds.length =1:''
                 let mo1 = (indexArray[0]*100/MyChilds.length)!=0?(indexArray[0]*100/MyChilds.length).toFixed(2)+'%'+arr[0]+' - ':''
-                statusFoundArray[0].d=(indexArray[0]*30/MyChilds.length).toFixed(2)
+                statusFoundArray[0].d=(indexArray[0]*360/MyChilds.length).toFixed(2)
                 statusFoundArray[0].c='pink'
                 let m1 = (indexArray[1]*100/MyChilds.length)!=0?(indexArray[1]*100/MyChilds.length).toFixed(2)+'%'+arr[1]+' - ':''
                 statusFoundArray[1].d=((indexArray[1]*360/MyChilds.length)+(indexArray[0]*360/MyChilds.length)).toFixed(2)

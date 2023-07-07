@@ -208,6 +208,9 @@ export const ReportStIdantTopicId = async (req, res) => {
         if(bigArrayS[topicId]!=null && bigArrayR[topicId]!=null){
             bigArrayS[topicId]==10?bigArrayS[topicId]=7:''
             statusFound = '100%'+arr[bigArrayS[topicId]]
+            statusFoundArray = [{c:'',d:0},{c:'',d:0},{c:'',d:0},{c:'',d:0},{c:'',d:0},{c:'',d:0},{c:'',d:0},{c:'',d:0}]
+            statusFoundArray[bigArrayS[topicId]].d=360
+            statusFoundArray[bigArrayS[topicId]+1].d=360
         }else{
             let MyChilds = []
             let bigArrayCh = []
