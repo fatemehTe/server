@@ -236,9 +236,6 @@ export const ReportStIdantTopicId = async (req, res) => {
                 statusFoundArray[0].d=(indexArray[0]*360/MyChilds.length)
                 statusFoundArray[0].c='pink'
                 let m1 = (indexArray[1]*100/MyChilds.length)!=0?(indexArray[1]*100/MyChilds.length).toFixed(2)+'%'+arr[1]+' - ':''
-                statusFoundArray[1].d=((indexArray[1]*360/MyChilds.length)+statusFound[0])
-                statusFoundArray[1].c='rgb(126, 80, 250)'
-                let m2 = (indexArray[2]*100/MyChilds.length)!=0?(indexArray[2]*100/MyChilds.length).toFixed(2)+'%'+arr[2]+' - ':''
                 statusFoundArray[1].d=((indexArray[1]*360/MyChilds.length)+statusFoundArray[0].d)
                 statusFoundArray[1].c='rgb(126, 80, 250)'
                 let m2 = (indexArray[2]*100/MyChilds.length)!=0?(indexArray[2]*100/MyChilds.length).toFixed(2)+'%'+arr[2]+' - ':''
