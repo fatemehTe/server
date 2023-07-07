@@ -93,12 +93,14 @@ export const updateById = async (req, res) => {
 
 export const ReportStIdantTopicId = async (req, res) => {
     const { studentId, topicId, weekStartDate, moshaverId } = req.query
+
+    // return res.status(200).json(req.query)
    
     let code = '11'
     try {
         const topics = await tajrobiYazdahom.find({ studentId })//studentId , topicsDetails
         const privateArr = await sampleTopicPrivate.find({code})//code , sampleTopicP
-        
+        // return res.status(200).json(privateArr)
         // return res.status(200).json(privateArr)
        
         //_______________________________________________________
@@ -227,7 +229,7 @@ export const ReportStIdantTopicId = async (req, res) => {
                 MyChilds.length == 0?MyChilds.length =1:''
                 MyChilds.length == 0?MyChilds.length=1:''
                 let mo1 = (indexArray[0]*100/MyChilds.length)!=0?(indexArray[0]*100/MyChilds.length).toFixed(2)+'%'+arr[0]+' - ':''
-                statusFoundArray[0].d=(indexArray[0]*30/MyChilds.length).toFixed(2)
+                statusFoundArray[0].d=(indexArray[0]*360/MyChilds.length).toFixed(2)
                 statusFoundArray[0].c='pink'
                 let m1 = (indexArray[1]*100/MyChilds.length)!=0?(indexArray[1]*100/MyChilds.length).toFixed(2)+'%'+arr[1]+' - ':''
                 statusFoundArray[1].d=((indexArray[1]*360/MyChilds.length)+(indexArray[0]*360/MyChilds.length)).toFixed(2)
