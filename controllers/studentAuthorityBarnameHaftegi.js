@@ -121,7 +121,7 @@ export const getBarnameByStudentId = async (req, res) => {
         const Barnames = await StudentAuthorityBarnameHaftegi.find({ $and: [{ studentId }, { moshaverId }, {done}] })
         res.status(200).json(Barnames)
     } catch (error) {
-        res.status(404).json({ message: 'kgdfysgdf' })
+        res.status(404).json({ message: error })
     }
 }
 
