@@ -260,7 +260,7 @@ export const ReportStIdantTopicId = async (req, res) => {
                 str.substring(str.length-4,str.length-1 === ' - ')?str = str.substring(0,str.length-3):''
                 statusFound = str
                 statusFoundArray.map((x,i)=>{
-                    statusFoundArray[i]=x.toFixed(2)
+                    statusFoundArray[i].d=x.d.toFixed(2)
                 })
                 
                 
