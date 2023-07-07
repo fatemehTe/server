@@ -229,33 +229,37 @@ export const ReportStIdantTopicId = async (req, res) => {
                     }
                 }
                 MyChilds.length == 0?MyChilds.length =1:''
+                MyChilds.length == 0?MyChilds.length=1:''
                 let mo1 = (indexArray[0]*100/MyChilds.length)!=0?(indexArray[0]*100/MyChilds.length).toFixed(2)+'%'+arr[0]+' - ':''
-                statusFoundArray[0].d=(indexArray[0]*360/MyChilds.length).toFixed(2)
+                statusFoundArray[0].d=(indexArray[0]*360/MyChilds.length)
                 statusFoundArray[0].c='pink'
                 let m1 = (indexArray[1]*100/MyChilds.length)!=0?(indexArray[1]*100/MyChilds.length).toFixed(2)+'%'+arr[1]+' - ':''
-                statusFoundArray[1].d=((indexArray[1]*360/MyChilds.length)+(indexArray[0]*360/MyChilds.length)).toFixed(2)
+                statusFoundArray[1].d=((indexArray[1]*360/MyChilds.length)+statusFound[0])
                 statusFoundArray[1].c='rgb(126, 80, 250)'
                 let m2 = (indexArray[2]*100/MyChilds.length)!=0?(indexArray[2]*100/MyChilds.length).toFixed(2)+'%'+arr[2]+' - ':''
-                statusFoundArray[2].d=((indexArray[2]*360/MyChilds.length)+(indexArray[1]*360/MyChilds.length)).toFixed(2)
+                statusFoundArray[2].d=((indexArray[2]*360/MyChilds.length)+statusFound[1])
                 statusFoundArray[2].c='blue'
                 let m3 = (indexArray[3]*100/MyChilds.length)!=0?(indexArray[3]*100/MyChilds.length).toFixed(2)+'%'+arr[3]+' - ':''
-                statusFoundArray[3].d=((indexArray[3]*360/MyChilds.length)+(indexArray[2]*360/MyChilds.length)).toFixed(2)
+                statusFoundArray[3].d=((indexArray[3]*360/MyChilds.length)+statusFound[2])
                 statusFoundArray[3].c='green'
                 let t = (indexArray[4]*100/MyChilds.length)!=0?(indexArray[4]*100/MyChilds.length).toFixed(2)+'%'+arr[4]+' - ':''
-                statusFoundArray[4].d=((indexArray[4]*360/MyChilds.length)+(indexArray[3]*360/MyChilds.length)).toFixed(2)
+                statusFoundArray[4].d=((indexArray[4]*360/MyChilds.length)+statusFound[3])
                 statusFoundArray[4].c='yellow'
                 let j = (indexArray[5]*100/MyChilds.length)!=0?(indexArray[5]*100/MyChilds.length).toFixed(2)+'%'+arr[5]+' - ':''
-                statusFoundArray[5].d=((indexArray[5]*360/MyChilds.length)+(indexArray[4]*360/MyChilds.length)).toFixed(2)
+                statusFoundArray[5].d=((indexArray[5]*360/MyChilds.length)+statusFound[4])
                 statusFoundArray[5].c='orange'
                 let e = (indexArray[6]*100/MyChilds.length)!=0?(indexArray[6]*100/MyChilds.length).toFixed(2)+'%'+arr[6]+' - ':''
-                statusFoundArray[6].d=((indexArray[6]*360/MyChilds.length)+(indexArray[5]*360/MyChilds.length)).toFixed(2)
+                statusFoundArray[6].d=((indexArray[6]*360/MyChilds.length)+statusFound[5])
                 statusFoundArray[6].c='black'
                 let h = (indexArray[7]*100/MyChilds.length)!=0?(indexArray[7]*100/MyChilds.length).toFixed(2)+'%'+arr[7]:''
-                statusFoundArray[7].d=((indexArray[7]*360/MyChilds.length)+(indexArray[6]*360/MyChilds.length)).toFixed(2)
+                statusFoundArray[7].d=((indexArray[7]*360/MyChilds.length)+statusFound[6])
                 statusFoundArray[7].c='red'
                 let str = mo1+m1+m2+m3+t+j+e+h
                 str.substring(str.length-4,str.length-1 === ' - ')?str = str.substring(0,str.length-3):''
                 statusFound = str
+                statusFoundArray.map((x,i)=>{
+                    statusFoundArray[i]=x.toFixed(2)
+                })
                 
                 
         }
