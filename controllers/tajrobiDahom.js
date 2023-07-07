@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 import tajrobiDahom from "../models/tajrobiDahom.js";
 import sampleTopicPrivate from "../models/sampleTopicPrivate.js";
-
+import  studentAuthorityBarnameHaftegi from '../models/studentAuthorityBarnameHaftegi.js';
 
 
 export const create = async (req, res) => {

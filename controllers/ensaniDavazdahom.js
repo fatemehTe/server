@@ -2,7 +2,7 @@ import mongoose from "mongoose"
 import ensaniDavazdahom from "../models/ensaniDavazdahom.js";
 // import sampleTopicPrivate from "../models/sampleTopicPrivate.js";
 import sampleTopicPrivate from "../models/sampleTopicGrand.js";
-
+import  studentAuthorityBarnameHaftegi from '../models/studentAuthorityBarnameHaftegi.js';
 
 
 export const create = async (req, res) => {

@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 import tajrobiFaregh from "../models/tajrobiFaregh.js";
 import sampleTopicPrivate from "../models/sampleTopicPrivate.js";
+import  studentAuthorityBarnameHaftegi from '../models/studentAuthorityBarnameHaftegi.js';
 
 
 

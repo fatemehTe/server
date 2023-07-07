@@ -2,7 +2,7 @@ import mongoose from "mongoose"
 import ensaniYazdahom from "../models/ensaniYazdahom.js";
 // import sampleTopicPrivate from "../models/sampleTopicPrivate.js";
 import sampleTopicPrivate from "../models/sampleTopicGrand.js";
-
+import  studentAuthorityBarnameHaftegi from '../models/studentAuthorityBarnameHaftegi.js';
 
 
 
